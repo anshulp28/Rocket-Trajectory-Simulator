@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rocket Trajectory Simulator</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-left">
+      <span class="header-icon">🚀</span>
+      <div>
+        <h1 class="header-title">Rocket Trajectory Simulator</h1>
+        <span class="header-sub">Real aerospace physics — built in 30 days</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-ghost" id="btn-dark" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <a class="btn btn-ghost" href="https://github.com/YOUR_USERNAME/rocket-sim" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <main class="main">
+
+    <!-- ===== LEFT SIDEBAR: Controls ===== -->
+    <aside class="sidebar" aria-label="Rocket configuration">
+
+      <!-- Preset selector -->
+      <section class="sidebar-section">
+        <h2 class="section-label">Rocket preset</h2>
+        <div class="preset-list" id="preset-list">
+          <button class="preset-btn active" data-preset="falcon9" onclick="UI.selectPreset('falcon9')">
+            <span class="preset-name">Falcon 9</span>
+            <span class="preset-sub">SpaceX · 7,607 kN · 9 engines</span>
+          </button>
+          <button class="preset-btn" data-preset="electron" onclick="UI.selectPreset('electron')">
+            <span class="preset-name">Electron</span>
+            <span class="preset-sub">Rocket Lab · 192 kN · small sat</span>
+          </button>
+          <button class="preset-btn" data-preset="saturn5" onclick="UI.selectPreset('saturn5')">
+            <span class="preset-name">Saturn V</span>
+            <span class="preset-sub">NASA · 34,020 kN · Moon rocket</span>
+          </button>
+          <button class="preset-btn" data-preset="starship" onclick="UI.selectPreset('starship')">
+            <span class="preset-name">Starship</span>
+            <span class="preset-sub">SpaceX · 74,000 kN · Mars rocket</span>
+          </button>
+          <button class="preset-btn" data-preset="custom" onclick="UI.selectPreset('custom')">
+            <span class="preset-name">Custom</span>
+            <span class="preset-sub">Design your own rocket</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Parameters -->
+      <section class="sidebar-section">
+        <h2 class="section-label">Parameters</h2>
+        <div class="param-list">
+
+          <div class="param-row">
+            <label class="param-label" for="sl-thrust">Thrust (kN)</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-thrust"
+                min="100" max="80000" value="7607" step="100"
+                oninput="UI.onSlider()" />
+              <span class="slider-val" id="v-thrust">7,607</span>
+            </div>
+            <p class="param-hint">Total thrust of all engines combined</p>
+          </div>
+
+          <div class="param-row">
+            <label class="param-label" for="sl-fuel">Fuel mass (t)</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-fuel"
+                min="5" max="4000" value="411" step="5"
+                oninput="UI.onSlider()" />
+              <span class="slider-val" id="v-fuel">411</span>
+            </div>
+            <p class="param-hint">Propellant mass (RP-1, methane, or hydrogen)</p>
+          </div>
+
+          <div class="param-row">
+            <label class="param-label" for="sl-dry">Dry mass (t)</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-dry"
+                min="1" max="300" value="25" step="1"
+                oninput="UI.onSlider()" />
+              <span class="slider-val" id="v-dry">25</span>
+            </div>
+            <p class="param-hint">Empty rocket structure weight</p>
+          </div>
+
+          <div class="param-row">
+            <label class="param-label" for="sl-payload">Payload (t)</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-payload"
+                min="0" max="150" value="13" step="1"
+                oninput="UI.onSlider()" />
+              <span class="slider-val" id="v-payload">13</span>
+            </div>
+            <p class="param-hint">Satellite or cargo being delivered</p>
+          </div>
+
+          <div class="param-row">
+            <label class="param-label" for="sl-isp">Isp (s)</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-isp"
+                min="180" max="460" value="282" step="1"
+                oninput="UI.onSlider()" />
+              <span class="slider-val" id="v-isp">282</span>
+            </div>
+            <p class="param-hint">Engine efficiency (higher = more efficient)</p>
+          </div>
+
+          <div class="param-row">
+            <label class="param-label" for="sl-speed">Sim speed</label>
+            <div class="slider-wrap">
+              <input type="range" class="slider" id="sl-speed"
+                min="1" max="8" value="4" step="1"
+                oninput="UI.onSpeedSlider()" />
+              <span class="slider-val" id="v-speed">4×</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Mission stats card -->
+      <section class="sidebar-section">
+        <div class="mission-card" id="mission-card">
+          <div class="mission-row">
+            <span class="mission-label">Delta-v</span>
+            <span class="mission-val" id="mc-dv">—</span>
+          </div>
+          <div class="mission-row">
+            <span class="mission-label">TWR</span>
+            <span class="mission-val" id="mc-twr">—</span>
+          </div>
+          <div class="mission-row">
+            <span class="mission-label">Burn time</span>
+            <span class="mission-val" id="mc-burn">—</span>
+          </div>
+          <div class="mission-row">
+            <span class="mission-label">Mass ratio</span>
+            <span class="mission-val" id="mc-ratio">—</span>
+          </div>
+          <div class="mission-status" id="mc-status">Configure rocket above</div>
+        </div>
+      </section>
+
+      <!-- Launch controls -->
+      <section class="sidebar-section">
+        <div class="launch-controls">
+          <button class="btn btn-launch" id="btn-launch" onclick="UI.toggleLaunch()">
+            Launch 🚀
+          </button>
+          <div class="launch-row">
+            <button class="btn btn-secondary" id="btn-pause" onclick="UI.togglePause()" disabled>
+              ⏸ Pause
+            </button>
+            <button class="btn btn-secondary" id="btn-reset" onclick="UI.reset()">
+              ↺ Reset
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ===== RIGHT PANEL: Graph + Telemetry ===== -->
+    <section class="content" aria-label="Simulation output">
+
+      <!-- Live telemetry stats -->
+      <div class="telemetry-grid">
+        <div class="telem-card">
+          <span class="telem-label">Altitude</span>
+          <span class="telem-val" id="t-alt">0 km</span>
+        </div>
+        <div class="telem-card">
+          <span class="telem-label">Velocity</span>
+          <span class="telem-val" id="t-vel">0 m/s</span>
+        </div>
+        <div class="telem-card">
+          <span class="telem-label">G-force</span>
+          <span class="telem-val" id="t-g">0.0 G</span>
+        </div>
+        <div class="telem-card">
+          <span class="telem-label">Fuel remaining</span>
+          <span class="telem-val" id="t-fuel">100%</span>
+        </div>
+        <div class="telem-card">
+          <span class="telem-label">Dyn. pressure</span>
+          <span class="telem-val" id="t-q">0 Pa</span>
+        </div>
+        <div class="telem-card">
+          <span class="telem-label">Mission time</span>
+          <span class="telem-val" id="t-time">T+0s</span>
+        </div>
+      </div>
+
+      <!-- Trajectory graph -->
+      <div class="graph-wrap">
+        <canvas id="graph-canvas" aria-label="Real-time rocket trajectory graph"></canvas>
+      </div>
+
+      <!-- Status / explain bar -->
+      <div class="status-bar" id="status-bar">
+        Configure your rocket and press <strong>Launch</strong> to begin the simulation.
+      </div>
+
+      <!-- Mission events log -->
+      <div class="events-panel" id="events-panel">
+        <span class="events-label">Mission events</span>
+        <div class="events-list" id="events-list">
+          <span class="event-empty">No events yet — launch the rocket</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>
+      Built in 30 days · Real physics (Tsiolkovsky equation, ISA atmosphere, Euler integration) ·
+      <a href="https://github.com/YOUR_USERNAME/rocket-sim" target="_blank" rel="noopener">View source on GitHub</a>
+    </p>
+  </footer>
+
+  <!-- Scripts — loaded in dependency order -->
+  <script src="js/physics.js"></script>
+  <script src="js/simulation.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/ui.js"></script>
+
+</body>
+</html>
