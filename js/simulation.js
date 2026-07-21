@@ -371,6 +371,10 @@ function startSimulation() {
   SimState.paused   = false;
   SimState.lastTime = null;
 
+  // CRITICAL FIX: set status to POWERED_FLIGHT so simulationTick doesn't
+  // immediately break on the status check (initial status is 'READY')
+  SimState.rocket = { ...SimState.rocket, status: 'POWERED_FLIGHT' };
+
   // Log launch event
   _logEvent(MissionEvent.LAUNCH, 0, 0, twr);
 
