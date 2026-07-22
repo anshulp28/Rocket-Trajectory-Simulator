@@ -239,6 +239,9 @@ const UI = (() => {
     // Update telemetry displays
     _updateTelemetry(rocket);
 
+    // Run animations
+    if (window.__Anim) window.__Anim.update(rocket, els.statusBar);
+
     // Update chart
     window.__Chart.draw(history, events, rocket);
 
@@ -294,6 +297,7 @@ const UI = (() => {
 
   // Called on reset
   window.onSimReset = function(rocket) {
+    if (window.__Anim) window.__Anim.reset();
     _resetTelemetry();
   };
 
