@@ -1,5 +1,5 @@
 /* =============================================
-   Rocket Trajectory Simulator â€” style.css
+   Rocket Trajectory Simulator — style.css
    Day 5: Full UI styling with dark mode support
    ============================================= */
 
@@ -575,4 +575,58 @@ a:hover { text-decoration: underline; }
   .telemetry-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* =============================================
+   Day 7: Telemetry Animations
+   ============================================= */
+
+/* Flash animations for telemetry cards */
+@keyframes flashUp {
+  0%   { background: var(--surface); }
+  30%  { background: #E6F1FB; }
+  100% { background: var(--surface); }
+}
+
+@keyframes flashDown {
+  0%   { background: var(--surface); }
+  30%  { background: #FAEEDA; }
+  100% { background: var(--surface); }
+}
+
+@keyframes flashAlert {
+  0%   { background: var(--surface); }
+  20%  { background: #FCEBEB; }
+  60%  { background: var(--surface); }
+  80%  { background: #FCEBEB; }
+  100% { background: var(--surface); }
+}
+
+.flash-up    { animation: flashUp    0.6s ease; }
+.flash-down  { animation: flashDown  0.6s ease; }
+.flash-alert { animation: flashAlert 0.6s ease; }
+
+/* Dynamic pressure warning pulse */
+@keyframes warningPulse {
+  0%   { border-color: var(--border); }
+  50%  { border-color: var(--red); }
+  100% { border-color: var(--border); }
+}
+
+.warning-pulse {
+  animation: warningPulse 0.8s ease infinite;
+}
+
+/* Event badge entrance animation */
+.event-badge {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Telem card smooth transitions */
+.telem-card {
+  transition: background var(--t);
+}
+
+.telem-val {
+  transition: color 0.3s ease;
 }
