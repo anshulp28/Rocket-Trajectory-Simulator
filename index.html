@@ -169,6 +169,17 @@
         </div>
       </section>
 
+      <!-- Disturbance injection -->
+      <section class="sidebar-section">
+        <h2 class="section-label">Inject disturbance</h2>
+        <div class="disturbance-grid">
+          <button class="btn btn-disturbance" onclick="window.__Effects?.injectDisturbance('wind_gust')" title="Sudden downward force">💨 Wind gust</button>
+          <button class="btn btn-disturbance" onclick="window.__Effects?.injectDisturbance('engine_anomaly')" title="Engine power loss">⚠️ Engine fault</button>
+          <button class="btn btn-disturbance" onclick="window.__Effects?.injectDisturbance('turbulence')" title="Random turbulence">〰️ Turbulence</button>
+        </div>
+        <p class="param-hint">Simulate real-world disturbances during powered flight</p>
+      </section>
+
     </aside>
 
     <!-- ===== RIGHT PANEL: Graph + Telemetry ===== -->
@@ -237,6 +248,7 @@
   <script src="js/simulation.js"></script>
   <script src="js/chart.js"></script>
   <script src="js/animations.js"></script>
+  <script src="js/effects.js"></script>
   <script src="js/ui.js"></script>
 
 </body>
