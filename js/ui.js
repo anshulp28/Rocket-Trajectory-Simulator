@@ -100,6 +100,7 @@ const UI = (() => {
 
     // Initialize chart
     window.__Chart.init('graph-canvas');
+    window.__Effects?.init('graph-canvas');
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
@@ -241,6 +242,7 @@ const UI = (() => {
 
     // Run animations
     if (window.__Anim) window.__Anim.update(rocket, els.statusBar);
+    if (window.__Effects) window.__Effects.checkStageSeparation(rocket, history);
 
     // Update chart
     window.__Chart.draw(history, events, rocket);
@@ -298,6 +300,7 @@ const UI = (() => {
   // Called on reset
   window.onSimReset = function(rocket) {
     if (window.__Anim) window.__Anim.reset();
+    if (window.__Effects) window.__Effects.reset();
     _resetTelemetry();
   };
 
