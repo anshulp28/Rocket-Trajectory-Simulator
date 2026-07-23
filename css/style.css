@@ -630,3 +630,36 @@ a:hover { text-decoration: underline; }
 .telem-val {
   transition: color 0.3s ease;
 }
+
+/* =============================================
+   Day 8: Disturbance Buttons & Stage Sep
+   ============================================= */
+
+.disturbance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.disturbance-grid .btn-disturbance:last-child {
+  grid-column: 1 / -1;
+}
+
+.btn-disturbance {
+  padding: 6px 8px;
+  font-size: 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--t);
+  font-family: inherit;
+  text-align: center;
+}
+
+.btn-disturbance:hover {
+  background: var(--orange-light);
+  border-color: var(--orange);
+  color: #5a3000;
+}
