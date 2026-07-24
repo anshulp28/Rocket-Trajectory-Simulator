@@ -101,6 +101,7 @@ const UI = (() => {
     // Initialize chart
     window.__Chart.init('graph-canvas');
     window.__Effects?.init('graph-canvas');
+    window.__Budget?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
@@ -365,6 +366,7 @@ const UI = (() => {
   }
 
   function _updateMissionCard(c) {
+    if (window.__Budget) window.__Budget.update(c);
     const G0  = window.PHYSICS?.G0 || 9.807;
     const dv  = c.isp * G0 * Math.log(c.tot / (c.dryMass + c.payloadMass));
     const twr = c.thrust / (c.tot * G0);
