@@ -663,3 +663,108 @@ a:hover { text-decoration: underline; }
   border-color: var(--orange);
   color: #5a3000;
 }
+
+/* =============================================
+   Day 9: Delta-v Budget & Payload Chart
+   ============================================= */
+
+/* Budget bar */
+.budget-bar-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+.budget-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--surface-3);
+  width: 100%;
+}
+
+.budget-seg {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.budget-useful  { background: #185FA5; }
+.budget-gravity { background: #D85A30; }
+.budget-drag    { background: #854F0B; }
+.budget-margin  { background: #3B6D11; }
+
+.budget-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bleg-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.bleg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Budget rows */
+.budget-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budget-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.budget-val {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Efficiency bar */
+.efficiency-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.efficiency-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.efficiency-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease, background 0.4s ease;
+  width: 0%;
+}
+
+.efficiency-score {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 32px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
