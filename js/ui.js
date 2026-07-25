@@ -102,6 +102,7 @@ const UI = (() => {
     window.__Chart.init('graph-canvas');
     window.__Effects?.init('graph-canvas');
     window.__Budget?.init();
+    window.__Export?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
@@ -257,6 +258,7 @@ const UI = (() => {
 
   // Called when mission ends
   window.onMissionEnd = function(rocket, events) {
+    if (window.__Export) window.__Export.showMissionSummary(rocket, window.SIM?.history || [], events);
     isLaunched = false;
     els.btnLaunch.textContent = 'Launch 🚀';
     els.btnLaunch.classList.remove('abort');
