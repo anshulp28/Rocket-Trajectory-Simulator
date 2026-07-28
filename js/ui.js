@@ -103,6 +103,7 @@ const UI = (() => {
     window.__Effects?.init('graph-canvas');
     window.__Budget?.init();
     window.__Export?.init();
+    window.__Controls?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
