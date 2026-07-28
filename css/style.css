@@ -962,3 +962,90 @@ a:hover { text-decoration: underline; }
 }
 
 .btn-fly-b:hover { background: var(--blue); color: #fff; }
+
+/* =============================================
+   Day 12: Mobile Polish & Performance
+   ============================================= */
+
+/* Sidebar collapse animation */
+.sidebar {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sidebar-collapsed {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+/* Sidebar toggle button (mobile only) */
+.sidebar-toggle-btn {
+  display: none;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: inherit;
+  margin-left: 8px;
+}
+
+/* Touch-friendly slider thumb on mobile */
+@media (max-width: 900px) {
+  .sidebar-toggle-btn { display: inline-flex; }
+
+  .slider::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  .telem-val { font-size: 13px; }
+
+  .preset-btn { padding: 10px 12px; }
+
+  .btn-launch { padding: 12px; font-size: 15px; }
+
+  .telemetry-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .graph-wrap { min-height: 240px; }
+
+  .events-panel { display: none; }
+}
+
+@media (max-width: 600px) {
+  .telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header-title { font-size: 13px; }
+
+  .main { grid-template-columns: 1fr; }
+
+  .sidebar {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    z-index: 50;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+
+  .sidebar-collapsed {
+    transform: translateX(-100%);
+  }
+}
+
+/* FPS counter */
+#fps-counter {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
