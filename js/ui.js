@@ -104,6 +104,7 @@ const UI = (() => {
     window.__Budget?.init();
     window.__Export?.init();
     window.__Controls?.init();
+    window.__Perf?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
