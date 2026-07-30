@@ -105,6 +105,7 @@ const UI = (() => {
     window.__Export?.init();
     window.__Controls?.init();
     window.__Perf?.init();
+    window.__History?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
@@ -247,6 +248,15 @@ const UI = (() => {
     // Run animations
     if (window.__Anim) window.__Anim.update(rocket, els.statusBar);
     if (window.__Effects) window.__Effects.checkStageSeparation(rocket, history);
+    if (events && events.length > 0) {
+      events.forEach(e => {
+        if (e.type && !e._explained) {
+          window.__History?.explainEvent(e.type);
+          window.__History?.startFactTicker();
+          e._explained = true;
+        }
+      });
+    }
 
     // Update chart
     window.__Chart.draw(history, events, rocket);
@@ -261,6 +271,7 @@ const UI = (() => {
   // Called when mission ends
   window.onMissionEnd = function(rocket, events) {
     if (window.__Export) window.__Export.showMissionSummary(rocket, window.SIM?.history || [], events);
+    window.__History?.stopFactTicker();
     isLaunched = false;
     els.btnLaunch.textContent = 'Launch 🚀';
     els.btnLaunch.classList.remove('abort');
@@ -306,6 +317,7 @@ const UI = (() => {
   window.onSimReset = function(rocket) {
     if (window.__Anim) window.__Anim.reset();
     if (window.__Effects) window.__Effects.reset();
+    window.__History?.stopFactTicker();
     _resetTelemetry();
   };
 
