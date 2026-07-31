@@ -198,6 +198,10 @@ const RocketChart = (() => {
     _drawLegend(c);
   }
 
+  // Analysis overlays
+if (window.__Analysis?.isEnabled()) {
+  window.__Analysis.draw(ctx, history, maxDisplayAlt, padding, W, H);
+}
   // ============================================================
   // DRAWING HELPERS
   // ============================================================
