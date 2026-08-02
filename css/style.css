@@ -1637,3 +1637,261 @@ a:hover { text-decoration: underline; }
   background: var(--surface-3);
   color: var(--text-primary);
 }
+/* =============================================
+   Day 13: Historical Context & Explain Panel
+   (Add this to the bottom of your style.css)
+   ============================================= */
+
+/* Rocket history card */
+.rocket-history-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid #185FA5;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transition: border-color 0.3s ease;
+}
+
+.rhc-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rhc-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rhc-operator {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.rhc-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rhc-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rhc-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.rhc-val {
+  font-size: 10px;
+  color: var(--text-primary);
+  text-align: right;
+  line-height: 1.4;
+}
+
+.rhc-fact {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: 6px 8px;
+  background: var(--surface-1);
+  border-radius: var(--radius-sm);
+}
+
+.rhc-details {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.rhc-details summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 11px;
+  padding: 2px 0;
+}
+
+.rhc-details p {
+  margin-top: 6px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Explain panel */
+.explain-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ep-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ep-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ep-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  padding: 0 2px;
+}
+
+.ep-summary {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.ep-details {
+  font-size: 11px;
+}
+
+.ep-details summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-size: 11px;
+  padding: 2px 0;
+}
+
+.ep-detail {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Fun facts ticker */
+.fact-ticker {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  border-top: 0.5px solid var(--border);
+  margin-bottom: 6px;
+  display: none;
+}
+/* =============================================
+   Day 14: Analysis Overlay Toggles
+   (Append to bottom of style.css)
+   ============================================= */
+
+.analysis-toggles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.analysis-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.analysis-btns {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.btn-analysis {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background var(--t), color var(--t), border-color var(--t);
+}
+
+.btn-analysis.active {
+  background: var(--blue-light);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
+.btn-analysis:hover:not(.active) {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+/* =============================================
+   Day 16: Rocket Visualizer Panel
+   (Append to bottom of style.css)
+   ============================================= */
+
+.rocket-viz-panel {
+  background: #05050a;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 200px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+#rocket-viz-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.viz-overlay {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.viz-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 900px) {
+  .rocket-viz-panel { height: 150px; }
+}
