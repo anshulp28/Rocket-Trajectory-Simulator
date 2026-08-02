@@ -105,6 +105,9 @@ const UI = (() => {
     window.__Export?.init();
     window.__Controls?.init();
     window.__Perf?.init();
+    window.__Theme?.init();
+    window.__History?.init();
+    window.__Analysis?.init();
     window.__History?.init();
 
     // Load default preset (Falcon 9)
@@ -151,6 +154,7 @@ const UI = (() => {
   // ============================================================
 
   function onSlider() {
+    window.__Theme?.updateAllSliderFills();
     const c = _getConfig();
 
     // Update value displays with formatting
@@ -257,9 +261,47 @@ const UI = (() => {
         }
       });
     }
+    if (events && events.length > 0) {
+      events.forEach(e => {
+        if (e.type && !e._explained) {
+          window.__History?.explainEvent(e.type);
+          window.__History?.startFactTicker();
+          e._explained = true;
+        }
+      });
+    }
+    if (events && events.length > 0) {
+      events.forEach(e => {
+        if (e.type && !e._explained) {
+          window.__History?.explainEvent(e.type);
+          window.__History?.startFactTicker();
+          e._explained = true;
+        }
+      });
+    }
 
     // Update chart
     window.__Chart.draw(history, events, rocket);
+    if (window.__Analysis?.isEnabled() && history.length > 10) {
+      const cv = document.getElementById('graph-canvas');
+      if (cv) {
+        const ctx2 = cv.getContext('2d');
+        const W = cv.clientWidth, H = cv.clientHeight;
+        const maxAlt = Math.max(...history.map(p => p.alt), 250000) * 1.25;
+        const pad = { t: 24, r: 80, b: 36, l: 58 };
+        window.__Analysis.draw(ctx2, history, maxAlt, pad, W, H);
+      }
+    }
+    if (window.__Analysis?.isEnabled() && history.length > 10) {
+      const cv = document.getElementById('graph-canvas');
+      if (cv) {
+        const ctx2 = cv.getContext('2d');
+        const W = cv.clientWidth, H = cv.clientHeight;
+        const maxAlt = Math.max(...history.map(p => p.alt), 250000) * 1.25;
+        const pad = { t: 24, r: 80, b: 36, l: 58 };
+        window.__Analysis.draw(ctx2, history, maxAlt, pad, W, H);
+      }
+    }
 
     // Update status bar
     _updateStatusFromRocket(rocket);
@@ -271,6 +313,8 @@ const UI = (() => {
   // Called when mission ends
   window.onMissionEnd = function(rocket, events) {
     if (window.__Export) window.__Export.showMissionSummary(rocket, window.SIM?.history || [], events);
+    window.__History?.stopFactTicker();
+    window.__History?.stopFactTicker();
     window.__History?.stopFactTicker();
     isLaunched = false;
     els.btnLaunch.textContent = 'Launch 🚀';
@@ -317,6 +361,8 @@ const UI = (() => {
   window.onSimReset = function(rocket) {
     if (window.__Anim) window.__Anim.reset();
     if (window.__Effects) window.__Effects.reset();
+    window.__History?.stopFactTicker();
+    window.__History?.stopFactTicker();
     window.__History?.stopFactTicker();
     _resetTelemetry();
   };
