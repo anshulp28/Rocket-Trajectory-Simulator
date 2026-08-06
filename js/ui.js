@@ -118,6 +118,7 @@ const UI = (() => {
     window.__History?.init();
     window.__Analysis?.init();
     window.__History?.init();
+    window.__Telemetry?.init();
 
     // Load default preset (Falcon 9)
     selectPreset('falcon9');
@@ -263,9 +264,11 @@ const UI = (() => {
     // Run animations
     if (window.__Anim) window.__Anim.update(rocket, els.statusBar);
     if (window.__Visualizer) window.__Visualizer.updateState(rocket);
+    if (window.__Telemetry) window.__Telemetry.update(rocket);
     if (window.__Audio && !rocket.burnout) {
-      const fuelFrac = rocket.fuelMass / (rocket.fuelMass + rocket.dryMass + 1);
-      window.__Audio.updateEngineIntensity(Math.min(1, fuelFrac));
+  const fuelFrac = rocket.fuelMass / (rocket.fuelMass + rocket.dryMass + 1);
+  window.__Audio.updateEngineIntensity(Math.min(1, fuelFrac));
+}
     }
     if (window.__Visualizer) window.__Visualizer.updateState(rocket);
     if (window.__Effects) window.__Effects.checkStageSeparation(rocket, history);
@@ -426,6 +429,7 @@ const UI = (() => {
     if (window.__Effects) window.__Effects.reset();
     window.__History?.stopFactTicker();
     window.__Visualizer?.reset();
+    window.__Telemetry?.reset();
     window.__Audio?.stopEngine();
     window.__History?.stopFactTicker();
     window.__Visualizer?.reset();
