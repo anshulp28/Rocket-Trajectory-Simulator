@@ -271,19 +271,22 @@ const UI = (() => {
 }
     }
     if (window.__Visualizer) window.__Visualizer.updateState(rocket);
-    if (window.__Effects) window.__Effects.checkStageSeparation(rocket, history);
-    if (events && events.length > 0) {
-      events.forEach(e => {
-        if (e.type && !e._explained) {
-          window.__History?.explainEvent(e.type);
-          window.__History?.startFactTicker();
-          if (e.type === 'MACH_1')       window.__Audio?.play('mach1');
-          if (e.type === 'KARMAN_LINE')  window.__Audio?.play('karman');
-          if (e.type === 'ENGINE_CUTOFF') { window.__Audio?.play('burnout'); window.__Audio?.stopEngine(); }
-          e._explained = true;
-        }
-      });
+  if (window.__Effects) window.__Effects.checkStageSeparation(rocket, history);
+if (events && events.length > 0) {
+  events.forEach(e => {
+    if (e.type && !e._explained) {
+      window.__History?.explainEvent(e.type);
+      window.__History?.startFactTicker();
+      if (e.type === 'MACH_1') window.__Audio?.play('mach1');
+      if (e.type === 'KARMAN_LINE') window.__Audio?.play('karman');
+      if (e.type === 'ENGINE_CUTOFF') {
+        window.__Audio?.play('burnout');
+        window.__Audio?.stopEngine();
+      }
+      e._explained = true;
     }
+  });
+}
     if (events && events.length > 0) {
       events.forEach(e => {
         if (e.type && !e._explained) {
